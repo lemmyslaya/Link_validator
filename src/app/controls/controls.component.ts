@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Link } from '../link';
 
 const baseLinkPattern: RegExp = /https:\/\/steamcommunity.com\/tradeoffer\/new\/\?/;
@@ -15,13 +15,19 @@ export class ControlsComponent implements OnInit {
   correctInfo: string;
   warningInfo: string;
   warningVisible: boolean;
+  @Input() newItems: Link[] = [];
+
   constructor() {
     this.warningVisible, this.correctVisible = false;
     this.warningInfo, this.correctInfo = '';
   }
 
   ngOnInit() {
+    
+  }
 
+  public addNewItem(usr:Link):void{
+    this.newItems.push(usr);
   }
 
   public showMessage(type: boolean, text: string): void {
@@ -57,13 +63,14 @@ export class ControlsComponent implements OnInit {
     if (compareBase) {
       this.hideMessage();
       
-      let userObj: Link = {
+      var userObj: Link = {
         partner: userData[0].replace('partner=', ''),
         token: userData[1].replace('token=', '')
       }
 
       if (this.validatePartnerID(userObj.partner)) {
         this.hideMessage();
+        this.addNewItem(userObj);
         this.showMessage(true,'Link is saved');
       } else {
         this.showMessage(false,'Invalid Partner ID');

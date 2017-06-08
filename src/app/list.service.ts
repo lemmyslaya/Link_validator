@@ -9,7 +9,11 @@ export class ListService {
 
   response: Link[];
 
+
+
   constructor(private http: Http) {}
+
+
 
   get() {
    	return this.http.get('./assets/mock.json')
