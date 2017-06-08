@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./controls.component.scss']
 })
 export class ControlsComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {
+
   }
+
+  getInputValue(val) {
+    console.log(val);    
+  }
+
 
 }
