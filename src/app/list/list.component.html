@@ -1,18 +1,12 @@
-
+<h1>Lista elementów, które dodajemy z inputa</h1>
 <ul>
 	<li *ngFor="let element of newItems">
-		{{element.partner}}{{element.token}}
+		https://steamcommunity.com/tradeoffer/new/?partner={{element.partner}}&token={{element.token}}
 	</li>
 </ul>
+<h1>Zasymulowanie pobierania danych z JSON</h1>
 <ul>
 	<li *ngFor="let element of elements">
-		<div>
-			<span class="partner-element">
-				{{element.partner}}
-			</span>
-			<span class="token-element">
-				{{element.token}}
-			</span>
-		</div>
+		https://steamcommunity.com/tradeoffer/new/?partner={{element.partner}}&token={{element.token}}
 	</li>
 </ul>
