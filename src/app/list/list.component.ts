@@ -9,6 +9,7 @@ import { Link } from '../link';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  newItems: Object;
 
   private elements: Link[];
 
@@ -18,6 +19,9 @@ export class ListComponent implements OnInit {
     this.service.get().then((result) => {
       this.elements = result;
     });
+    console.log(this.service.returnPost());
+    this.newItems = this.service.returnPost();
+
   }
 
 }

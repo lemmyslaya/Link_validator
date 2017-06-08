@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Link } from '../link';
+import { ListService } from '../list.service';
 
 const baseLinkPattern: RegExp = /https:\/\/steamcommunity.com\/tradeoffer\/new\/\?/;
 
@@ -15,26 +16,26 @@ export class ControlsComponent implements OnInit {
   correctInfo: string;
   warningInfo: string;
   warningVisible: boolean;
-  @Input() newItems: Link[] = [];
-
-  constructor() {
+  userObj: Link;
+  
+  constructor(private service: ListService) {
     this.warningVisible, this.correctVisible = false;
     this.warningInfo, this.correctInfo = '';
   }
 
   ngOnInit() {
-    
+
   }
 
-  public addNewItem(usr:Link):void{
-    this.newItems.push(usr);
+  public addNewItem(usr: Link): void {
+    this.service.post(usr);
   }
 
   public showMessage(type: boolean, text: string): void {
-    if(type){
+    if (type) {
       this.correctVisible = true;
-      this.correctInfo = text;    
-    }else{
+      this.correctInfo = text;
+    } else {
       this.warningVisible = true;
       this.warningInfo = text;
     }
@@ -51,7 +52,7 @@ export class ControlsComponent implements OnInit {
   }
 
   private validateUserToken(token: string): boolean {
-    let regexp: RegExp = /^[a-zA-Z 0-9]*$/;
+    let regexp: RegExp = /^[-_|a-zA-Z0-9]*$/;
     let result: boolean = regexp.test(token);
     return result;
   }
@@ -62,21 +63,25 @@ export class ControlsComponent implements OnInit {
     let userData: string[] = link.replace('https://steamcommunity.com/tradeoffer/new/?', '').split("&")
     if (compareBase) {
       this.hideMessage();
-      
-      var userObj: Link = {
+
+      this.userObj = {
         partner: userData[0].replace('partner=', ''),
         token: userData[1].replace('token=', '')
       }
 
-      if (this.validatePartnerID(userObj.partner)) {
-        this.hideMessage();
-        this.addNewItem(userObj);
-        this.showMessage(true,'Link is saved');
+      if (this.validatePartnerID(this.userObj.partner)) {
+        if(this.validateUserToken(this.userObj.token)){
+          this.hideMessage();
+          this.addNewItem(this.userObj);
+          this.showMessage(true, 'Link is saved');
+        }else{
+          this.showMessage(false, 'Invalid Token');
+        }
       } else {
-        this.showMessage(false,'Invalid Partner ID');
+        this.showMessage(false, 'Invalid Partner ID');
       }
     } else {
-      this.showMessage(false,'Your link is not from SteamCommunity');
+      this.showMessage(false, 'Your link is not from SteamCommunity');
     }
 
   }
