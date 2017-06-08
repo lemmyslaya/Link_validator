@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Link } from '../link';
 
-const baseLinkPattern:RegExp = /https:\/\/steamcommunity.com\/tradeoffer\/new\/\?/;
+const baseLinkPattern: RegExp = /https:\/\/steamcommunity.com\/tradeoffer\/new\/\?/;
 
 @Component({
   selector: 'app-controls',
@@ -10,38 +11,51 @@ const baseLinkPattern:RegExp = /https:\/\/steamcommunity.com\/tradeoffer\/new\/\
 
 
 export class ControlsComponent implements OnInit {
-  
-  constructor() { }
+  warningInfo: string;
+  warningVisible: boolean;
+  constructor() { 
+  	this.warningVisible = true;
+  	this.warningInfo = 'test warning';
+  }
 
   ngOnInit() {
 
   }
 
-  showErrorMessage(text):String{
-    console.log(text);
+  public showErrorMessage(text:string): string {
     return text;
   }
 
-  validatePartnerID(id):boolean{
-    var regexp = /^[0-9]{7}$/;
-    var result = regexp.test(id);
+  private validatePartnerID(id:string): boolean {
+    let regexp:RegExp = /^[0-9]+$/;
+    let result:boolean = regexp.test(id);
+    return result;
+  }
+
+  private validateUserToken(token:string):boolean{
+    let regexp:RegExp = /^[a-zA-Z 0-9]*$/;
+    let result:boolean = regexp.test(token);
     return result;
   }
 
   getInputValue(val) {
     let link: string = val;
     let compareBase: boolean = baseLinkPattern.test(link);
-    let userData:string[] = link.replace('https://steamcommunity.com/tradeoffer/new/?', '').split("&")
-    var userObj:Object = {
-      partner: userData[0].replace('partner=',''),
-      token: userData[1].replace('token=','')
-    }
-    if(compareBase){
+    let userData: string[] = link.replace('https://steamcommunity.com/tradeoffer/new/?', '').split("&")
+    if (compareBase) {
+      let userObj: Link = {
+        partner: userData[0].replace('partner=', ''),
+        token: userData[1].replace('token=', '')
+      }
+      if (this.validatePartnerID(userObj.partner)) {
 
-    }else{
+      } else {
+        this.showErrorMessage('Invalid Partner ID')
+      }
+    } else {
       this.showErrorMessage('Your link is not from SteamCommunity')
     }
-    
+
   }
 
 

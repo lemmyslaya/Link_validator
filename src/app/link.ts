@@ -1,4 +1,4 @@
 export interface Link {
-	partner: number;
+	partner: string;
 	token: string;
 }
