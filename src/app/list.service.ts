@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, URLSearchParams, Headers } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+
+import { Link } from './link';
 
 @Injectable()
 export class ListService {
 
-  response: any;
+  response: Link[];
 
   constructor(private http: Http) {}
 
