@@ -1,5 +1,15 @@
 input{
     width:75%;
     height: 40px;
-    
+}
+input:hover {
+	background-color: #fcf9bc;
+}
+.wrapper {
+	padding-top: 50px;
+}
+.wrapper button {
+	height: 46px;
+	padding: 0 50px;
+	margin-left: 10px;
 }
