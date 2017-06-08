@@ -22,10 +22,20 @@ export class ControlsComponent implements OnInit {
     return text;
   }
 
+  validatePartnerID(id):boolean{
+    var regexp = /^[0-9]{7}$/;
+    var result = regexp.test(id);
+    return result;
+  }
+
   getInputValue(val) {
     let link: string = val;
     let compareBase: boolean = baseLinkPattern.test(link);
-    
+    let userData:string[] = link.replace('https://steamcommunity.com/tradeoffer/new/?', '').split("&")
+    var userObj:Object = {
+      partner: userData[0].replace('partner=',''),
+      token: userData[1].replace('token=','')
+    }
     if(compareBase){
 
     }else{
