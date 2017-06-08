@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  private elements: any[];
+
+  constructor() {
+  	this.elements = ['test1'];
+  }
 
   ngOnInit() {
   }
