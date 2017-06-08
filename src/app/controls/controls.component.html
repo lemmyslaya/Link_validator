@@ -1,3 +1,4 @@
-<input type="text" name="linkVal" id="linkVal" [(ngModel)]="linkVal"/>
+<input type="text" name="linkVal" id="linkVal" (keyup)="warningVisible = false; correctVisible = false" [(ngModel)]="linkVal"/>
 <button type="submit" (click)="getInputValue(linkVal)">Save</button>
 <div *ngIf="warningVisible" class="warning">{{warningInfo}}</div>
+<div *ngIf="correctVisible" class="correct">{{correctInfo}}</div>

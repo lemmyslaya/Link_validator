@@ -11,30 +11,42 @@ const baseLinkPattern: RegExp = /https:\/\/steamcommunity.com\/tradeoffer\/new\/
 
 
 export class ControlsComponent implements OnInit {
+  correctVisible: boolean;
+  correctInfo: string;
   warningInfo: string;
   warningVisible: boolean;
-  constructor() { 
-  	this.warningVisible = true;
-  	this.warningInfo = 'test warning';
+  constructor() {
+    this.warningVisible, this.correctVisible = false;
+    this.warningInfo, this.correctInfo = '';
   }
 
   ngOnInit() {
 
   }
 
-  public showErrorMessage(text:string): string {
-    return text;
+  public showMessage(type: boolean, text: string): void {
+    if(type){
+      this.correctVisible = true;
+      this.correctInfo = text;    
+    }else{
+      this.warningVisible = true;
+      this.warningInfo = text;
+    }
+  }
+  public hideMessage(): void {
+    this.warningVisible = false;
+    this.correctVisible = false;
   }
 
-  private validatePartnerID(id:string): boolean {
-    let regexp:RegExp = /^[0-9]+$/;
-    let result:boolean = regexp.test(id);
+  private validatePartnerID(id: string): boolean {
+    let regexp: RegExp = /^[0-9]+$/;
+    let result: boolean = regexp.test(id);
     return result;
   }
 
-  private validateUserToken(token:string):boolean{
-    let regexp:RegExp = /^[a-zA-Z 0-9]*$/;
-    let result:boolean = regexp.test(token);
+  private validateUserToken(token: string): boolean {
+    let regexp: RegExp = /^[a-zA-Z 0-9]*$/;
+    let result: boolean = regexp.test(token);
     return result;
   }
 
@@ -43,17 +55,21 @@ export class ControlsComponent implements OnInit {
     let compareBase: boolean = baseLinkPattern.test(link);
     let userData: string[] = link.replace('https://steamcommunity.com/tradeoffer/new/?', '').split("&")
     if (compareBase) {
+      this.hideMessage();
+      
       let userObj: Link = {
         partner: userData[0].replace('partner=', ''),
         token: userData[1].replace('token=', '')
       }
-      if (this.validatePartnerID(userObj.partner)) {
 
+      if (this.validatePartnerID(userObj.partner)) {
+        this.hideMessage();
+        this.showMessage(true,'Link is saved');
       } else {
-        this.showErrorMessage('Invalid Partner ID')
+        this.showMessage(false,'Invalid Partner ID');
       }
     } else {
-      this.showErrorMessage('Your link is not from SteamCommunity')
+      this.showMessage(false,'Your link is not from SteamCommunity');
     }
 
   }
