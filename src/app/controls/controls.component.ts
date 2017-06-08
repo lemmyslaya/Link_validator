@@ -11,8 +11,12 @@ const baseLinkPattern: RegExp = /https:\/\/steamcommunity.com\/tradeoffer\/new\/
 
 
 export class ControlsComponent implements OnInit {
-
-  constructor() { }
+  warningInfo: string;
+  warningVisible: boolean;
+  constructor() { 
+  	this.warningVisible = true;
+  	this.warningInfo = 'test warning';
+  }
 
   ngOnInit() {
 
