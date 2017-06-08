@@ -11,10 +11,12 @@ export class ListComponent implements OnInit {
   private elements: any[];
 
   constructor(private service: ListService) {
-  	this.elements = [
-  		{parent: '12356', token: 'abcdef'},
-  		{parent: '12356', token: 'abcdef'}
-  	];
+  	this.elements = [];
+  	
+  	service.get().then((result) => {
+  		this.elements = result;
+  	});
+  	
   }
 
   ngOnInit() {
