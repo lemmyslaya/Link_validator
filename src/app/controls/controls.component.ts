@@ -17,7 +17,7 @@ export class ControlsComponent implements OnInit {
   warningInfo: string;
   warningVisible: boolean;
   userObj: Link;
-  
+
   constructor(private service: ListService) {
     this.warningVisible, this.correctVisible = false;
     this.warningInfo, this.correctInfo = '';
@@ -60,21 +60,21 @@ export class ControlsComponent implements OnInit {
   getInputValue(val) {
     let link: string = val;
     let compareBase: boolean = baseLinkPattern.test(link);
-    let userData: string[] = link.replace('https://steamcommunity.com/tradeoffer/new/?', '').split("&")
+    let userData: string[] = link.replace('https://steamcommunity.com/tradeoffer/new/?', '').split("&");
     if (compareBase) {
       this.hideMessage();
 
       this.userObj = {
         partner: userData[0].replace('partner=', ''),
         token: userData[1].replace('token=', '')
-      }
+      };
 
       if (this.validatePartnerID(this.userObj.partner)) {
-        if(this.validateUserToken(this.userObj.token)){
+        if (this.validateUserToken(this.userObj.token)) {
           this.hideMessage();
           this.addNewItem(this.userObj);
           this.showMessage(true, 'Link is saved');
-        }else{
+        } else {
           this.showMessage(false, 'Invalid Token');
         }
       } else {
@@ -83,8 +83,5 @@ export class ControlsComponent implements OnInit {
     } else {
       this.showMessage(false, 'Your link is not from SteamCommunity');
     }
-
   }
-
-
 }

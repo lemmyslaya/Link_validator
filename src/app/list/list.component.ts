@@ -13,13 +13,12 @@ export class ListComponent implements OnInit {
 
   private elements: Link[];
 
-  constructor(private service: ListService) {}
+  constructor(private service: ListService) { }
 
   ngOnInit() {
     this.service.get().then((result) => {
       this.elements = result;
     });
-    console.log(this.service.returnPost());
     this.newItems = this.service.returnPost();
 
   }

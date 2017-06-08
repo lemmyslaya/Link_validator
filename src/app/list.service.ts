@@ -28,7 +28,7 @@ export class ListService {
   }
 
   handleError() {
-
+    return 'Something went wrong....';
   }
 
 }
