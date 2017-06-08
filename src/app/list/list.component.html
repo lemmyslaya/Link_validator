@@ -1,5 +1,12 @@
 <ul>
 	<li *ngFor="let element of elements">
-		{{element}}
+		<div>
+			<span class="parent-element">
+				{{element.parent}}
+			</span>
+			<span class="token-element">
+				{{element.token}}
+			</span>
+		</div>
 	</li>
 </ul>
